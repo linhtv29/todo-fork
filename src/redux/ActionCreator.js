@@ -50,3 +50,21 @@ export const ChooseFavouriteTask = (id, value) => {
     },
   };
 };
+
+export const AttempLogin = (isLogin) => {
+  return {
+    type: "Login_Succsess",
+    payload: {
+      isLogin
+    }
+  }
+}
+
+export const AttempLogout = (isLogin) => {
+  return {
+    type: "Logout_Succsess",
+    payload: {
+      isLogin
+    }
+  }
+}
