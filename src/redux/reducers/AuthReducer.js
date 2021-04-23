@@ -1,19 +1,19 @@
+import { LoginSucces, LogoutSucces } from "../ActionType";
 
-
-export const auth = (state = { isLoggedIn: true}, action) => {
+export const auth = (state = { isLoggedIn: false }, action) => {
   switch (action.type) {
-    case "Login_Succsess": {
+    case LoginSucces: {
       return {
         ...state,
-        isLoggedIn : true
-      }
+        isLoggedIn: true,
+      };
     }
 
-    case "Logout_Succsess" : {
+    case LogoutSucces: {
       return {
         ...state,
-        isLoggedIn : false
-      }
+        isLoggedIn: false,
+      };
     }
     default:
       return state;
