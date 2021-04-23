@@ -1,15 +1,18 @@
 import classes from "./App.module.css";
 import "antd/dist/antd.css";
 import TaskInput from "./TaskInput";
-import Title from "antd/lib/typography/Title";
 import TodoList from "./TodoList";
 import React from "react";
 import _ from "lodash";
 import { useSelector } from "react-redux";
 import Login from "./Login";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AttempLogout, AttempLogin} from "./redux/ActionCreator";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import Header from "./Header";
 
 export const TodoAppConText = React.createContext({
   appName: "Default App Name",
@@ -24,8 +27,6 @@ function App() {
 
   const newTaskValue = useSelector((store) => store.todoState.newTaskName);
 
-  const dispatch = useDispatch()
-
   let tasksNotCompleted = _.orderBy(
     partitions[1],
     ["isFavourite", "createdDate"],
@@ -33,11 +34,9 @@ function App() {
   );
 
   if (newTaskValue) {
-    console.log(tasksNotCompleted);
-    console.log(tasksNotCompleted[0].taskName.includes(newTaskValue));
-    tasksNotCompleted = tasksNotCompleted.filter(t => {
+    tasksNotCompleted = tasksNotCompleted.filter((t) =>
       t.taskName.includes(newTaskValue)
-    });
+    );
   }
 
   return (
@@ -45,13 +44,11 @@ function App() {
       <div className={classes.app}>
         <Router>
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
             <Route path="/home">
-              <Title className={classes.header}>Todo app
-              <span>
-                <button onClick={() => dispatch(AttempLogout())}>Logout</button>
-              </span>
-              </Title>
-              
+              <Header></Header>
               <div className={classes.taskInputContainer}>
                 <TaskInput />
               </div>
@@ -60,7 +57,6 @@ function App() {
                   taskList={tasksNotCompleted}
                   title={"Danh sách task"}
                 />
-
                 <TodoList
                   taskList={tasksCompleted}
                   title={"Danh sách task hoàn thành"}
@@ -74,7 +70,6 @@ function App() {
             </Route>
           </Switch>
         </Router>
-
       </div>
     </TodoAppConText.Provider>
   );

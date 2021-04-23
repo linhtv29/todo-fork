@@ -24,7 +24,7 @@ function TodoList(props) {
   return (
     <div>
       <Title level={3}>{props.title}</Title>
-      
+
       <div className={classes.todoListContainer}>
         {taskList.map((task) => (
           <TaskItem
